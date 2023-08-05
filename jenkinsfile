@@ -1,1 +1,29 @@
-
+pipeline {
+    agent any
+    
+    stages {
+        stage('Clone') {
+            steps {
+                sh "rm -rf *"
+                sh "git clone https://github.com/souihiritgithub/angular-app.git"
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'echo "Building the application"'
+                sh 'cd angular-app'
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+        
+        stage('Run') {
+            steps {
+                sh 'echo "Running the application"'
+                sh 'cd angular-app'
+                sh 'npm start'
+            }
+        }
+    }
+}
