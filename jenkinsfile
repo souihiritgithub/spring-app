@@ -9,21 +9,15 @@ pipeline {
             }
         }
         
-        stage('Build') {
+        stage('Build and Package') {
             steps {
-                sh 'echo "Building the application"'
-                sh 'cd angular-app'
-                sh 'npm install'
-                sh 'npm run build'
+                sh 'mvn clean package'
             }
         }
+
+
+       
+
         
-        stage('Run') {
-            steps {
-                sh 'echo "Running the application"'
-                sh 'cd angular-app'
-                sh 'npm start'
-            }
-        }
     }
 }
