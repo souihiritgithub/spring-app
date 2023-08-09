@@ -9,14 +9,11 @@ pipeline {
             }
         }
         
-        stage('Build and Package') {
+        stage('compile') {
             steps {
                 sh 'mvn compile'
             }
         }
-        
-
-
         stage('Package') {
             steps {
                 sh 'mvn package'
