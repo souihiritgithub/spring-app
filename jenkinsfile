@@ -4,14 +4,14 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                sh "rm -rf *"
-                sh "git clone https://github.com/souihiritgithub/spring-app.git"
+                sh 'rm -rf *'
+                sh 'git clone https://github.com/souihiritgithub/spring-app.git'
             }
         }
         
         stage('compile') {
             steps {
-                sh 'mvn compile'
+                sh 'mvn compile --DskipTests'
             }
         }
         stage('Package') {
