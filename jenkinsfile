@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Clone') {
+            steps {
+                sh "rm -rf *"
+                sh "git clone https://github.com/souihiritgithub/spring-app.git"
+            }
+        }
+        
+        stage('Compile') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+    
+        stage('Package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+    }
+}
