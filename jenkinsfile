@@ -11,10 +11,13 @@ pipeline {
         stage('Build and Package') {
             steps {
                 sh 'mvn compile'
-                
             }
         }
         
-        
+        stage('Build') {
+            steps {
+                echo 'This is a new pipeline.'
+            }
+        }
     }
 }
