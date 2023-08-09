@@ -11,17 +11,13 @@ pipeline {
         stage('Build and Package') {
             steps {
                 sh 'mvn compile'
-                
             }
         }
-        stages { 
-        stage('Build') { 
-            steps { 
-               echo 'This is a minimal pipeline.' 
+        
+        stage('Build') {
+            steps {
+                echo 'This is a minimal pipeline.'
             }
         }
-    }
-        
-        
     }
 }
