@@ -14,9 +14,11 @@ pipeline {
             }
         }
         
-        stage('Build') {
+    
+
+        stage('Package') {
             steps {
-                echo 'This is a new pipeline.'
+                sh 'mvn package'
             }
         }
     }
