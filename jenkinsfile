@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
+                sh "rm -rf *"
                 sh "git clone https://github.com/souihiritgithub/spring-app.git"
             }
         }
@@ -14,7 +15,7 @@ pipeline {
             }
         }
         
-    
+
 
         stage('Package') {
             steps {
