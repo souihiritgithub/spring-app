@@ -15,11 +15,12 @@ pipeline {
 
             }
         }  
-
+        
         stage('Package') {
-            steps {
-                sh '/usr/bin/mvn -f /var/lib/jenkins/workspace/Pipeline/spring-app/pom.xml mvn package -DskipTests'
-            }
-        }      
+    steps {
+        sh '/usr/bin/mvn -f /var/lib/jenkins/workspace/Pipeline/spring-app/pom.xml package -DskipTests'
+    }
+}
+   
     }
 }
