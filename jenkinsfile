@@ -23,9 +23,13 @@ pipeline {
         
         stage('SonarQube Analysis') {
             steps {
-                sh '''/usr/bin/mvn -f /var/lib/jenkins/workspace/Pipeline/spring-app/pom.xml sonar:sonar \
-                    -Dsonar.login=28838461'''
+                sh '''/usr/bin/mvn clean verify sonar:sonar \
+                    -Dsonar.projectKey=test-mvn \
+                    -Dsonar.projectName='test-mvn' \
+                    -Dsonar.host.url=http://localhost:9000 \
+                    -Dsonar.login=sqp_d34430b4a6d6294866e44aae714428bb19cc3258'''
             }
         }
+
     }
 }
