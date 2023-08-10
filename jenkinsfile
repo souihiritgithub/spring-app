@@ -21,13 +21,14 @@ pipeline {
             }
         }
         
-        stage('Build and SonarQube Analysis') {
+        stage('SonarQube Analysis') {
             steps {
-                def mvnHome = tool name: 'Maven', type: 'hudson.tasks.Maven$MavenInstallation'
-                if (mvnHome) {
-                    sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=YOUR_SONAR_TOKEN"
-                } else {
-                    error "Maven n'est pas configuré correctement."
+                dir('/var/lib/jenkins/workspace/Pipeline/spring-app') {
+                    sh '''/usr/bin/mvn clean verify sonar:sonar \
+                        -Dsonar.projectKey=test \
+                        -Dsonar.projectName="test" \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=sqp_8a3dd7e2af8cbf83ecbe0e59c74c857fab1393ec'''
                 }
             }
         }
