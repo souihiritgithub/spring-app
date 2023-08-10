@@ -21,7 +21,7 @@ pipeline {
             }
         }
 
-        stage('Package') {
+        stage('sonar') {
             steps {
                 sh '/usr/bin/mvn -f /var/lib/jenkins/workspace/Pipeline/spring-app/pom.xml sonar:sonar -Dsonar.admin -Dsonar.password=28838461'
             }
