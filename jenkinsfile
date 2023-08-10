@@ -20,13 +20,12 @@ pipeline {
                 sh '/usr/bin/mvn -f /var/lib/jenkins/workspace/Pipeline/spring-app/pom.xml package -DskipTests'
             }
         }
-
-        stage('sonar') {
+        
+        stage('SonarQube Analysis') {
             steps {
-                sh '/usr/bin/mvn -f /var/lib/jenkins/workspace/Pipeline/spring-app/pom.xml sonar:sonar -Dsonar.admin -Dsonar.password=28838461'
+                sh '''/usr/bin/mvn -f /var/lib/jenkins/workspace/Pipeline/spring-app/pom.xml sonar:sonar \
+                    -Dsonar.login=28838461'''
             }
         }
-        
-        
     }
 }
