@@ -20,6 +20,18 @@ pipeline {
                 sh '/usr/bin/mvn -f /var/lib/jenkins/workspace/Pipeline/spring-app/pom.xml package -DskipTests'
             }
         }
+stage('SonarQube Analysis') {
+            steps {
+                dir('/var/lib/jenkins/workspace/Pipeline/spring-app') {
+                    sh '''/usr/bin/mvn clean verify -DskipTests sonar:sonar \
+                        -Dsonar.projectKey=test \
+                        -Dsonar.projectName="test" \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=sqp_8a3dd7e2af8cbf83ecbe0e59c74c857fab1393ec'''
+                }
+            }
+        }
+
         
         
     }
