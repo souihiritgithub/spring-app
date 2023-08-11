@@ -1,6 +1,14 @@
 pipeline {
     agent any
     
+    environment {
+        NEXUS_VERSION = "3" // Version de Nexus Repository Manager
+        NEXUS_PROTOCOL = "http" // Protocole utilisé pour accéder à Nexus
+        NEXUS_URL = "http://localhost:8081" // URL de Nexus Repository Manager
+        NEXUS_REPOSITORY = "maven-releases" // Nom du référentiel Nexus
+        NEXUS_CREDENTIAL_ID = "nexus-credentials" // ID des identifiants de connexion à Nexus
+    }
+    
     stages {
         stage('Clone') {
             steps {
@@ -20,7 +28,8 @@ pipeline {
                 sh '/usr/bin/mvn -f /var/lib/jenkins/workspace/Pipeline/spring-app/pom.xml package -DskipTests'
             }
         }
-stage('SonarQube Analysis') {
+        
+        stage('SonarQube Analysis') {
             steps {
                 dir('/var/lib/jenkins/workspace/Pipeline/spring-app') {
                     sh '''/usr/bin/mvn clean verify -DskipTests sonar:sonar \
@@ -31,16 +40,15 @@ stage('SonarQube Analysis') {
                 }
             }
         }
-stage("Publish to Nexus Repository Manager") {
+        
+        stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
-                    pom = readMavenPom file: "pom.xml";
-                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
-                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
-                    artifactPath = filesByGlob[0].path;
-                    artifactExists = fileExists artifactPath;
-                    if(artifactExists) {
-                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
+                    pom = readMavenPom file: "pom.xml"
+                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}")
+                    artifactPath = filesByGlob[0].path
+                    artifactExists = fileExists artifactPath
+                    if (artifactExists) {
                         nexusArtifactUploader(
                             nexusVersion: NEXUS_VERSION,
                             protocol: NEXUS_PROTOCOL,
@@ -59,16 +67,12 @@ stage("Publish to Nexus Repository Manager") {
                                 file: "pom.xml",
                                 type: "pom"]
                             ]
-                        );
+                        )
                     } else {
-                        error "*** File: ${artifactPath}, could not be found";
+                        error "*** File: ${artifactPath}, could not be found"
                     }
                 }
             }
         }
-    }
-}
-        
-        
     }
 }
