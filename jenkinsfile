@@ -1,14 +1,6 @@
 pipeline {
     agent any
     
-    environment {
-        NEXUS_VERSION = "3" // Version de Nexus Repository Manager
-        NEXUS_PROTOCOL = "http" // Protocole utilisé pour accéder à Nexus
-        NEXUS_URL = "http://localhost:8081" // URL de Nexus Repository Manager
-        NEXUS_REPOSITORY = "maven-releases" // Nom du référentiel Nexus
-        NEXUS_CREDENTIAL_ID = "nexus-credentials" // ID des identifiants de connexion à Nexus
-    }
-    
     stages {
         stage('Clone') {
             steps {
