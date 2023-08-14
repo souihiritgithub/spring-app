@@ -32,5 +32,13 @@ pipeline {
                 }
             }
         }
+
+stage('Deploy to Nexus') {
+            steps {
+                sh '''mvn -f spring-app/pom.xml deploy -DskipTests \
+                    -DaltDeploymentRepository=nexus::default::http://localhost:8081/#admin/repository/repositories/repository/maven-releases/ \
+                    -Dusername=admin -Dpassword=28838461'''
+            }
+        }
     }
 }
